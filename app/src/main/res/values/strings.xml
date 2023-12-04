@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tarea3_3</string>
+    <string name="producto">Producto</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="AGREGAR" />
+    <string name="anadir">AÑADIR</string>
+    <string name="limpiar">LIMPIAR</string>
+    <string name="salir">SALIR</string>
+    <string name="lista">Lista de la Compra</string>
+    <string name="nombreProducto">Nombre del Producto</string>
+    <string name="cantidadProd">Cantidad</string>
+    <string name="aceptarB">Aceptar</string>
+</resources>
