@@ -88,7 +88,7 @@ public class Main extends AppCompatActivity {
                 dbAdapter.crearElemento(nombreDevuelto,Integer.parseInt(cantidadDevuelto));
                 dbAdapter.obtenerTodosElementos();
 
-
+                rellenarLista();
             }
         }
     };
