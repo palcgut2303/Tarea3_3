@@ -1,7 +1,10 @@
 package com.example.tarea3_3;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,8 +13,11 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,20 +27,25 @@ public class Main extends AppCompatActivity {
 
     TextView listadoCompra;
     Button btAgregar,btLimpiar,btSalir;
-    ListaCompraDatabaseAdapter dbAdapter = null;
+
+
+    ListaCompraDatabaseAdapter dbAdapter;
 
     ListView listado;
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint({"WrongViewCast", "CutPasteId"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        listadoCompra = findViewById(R.id.listado);
+        dbAdapter = new ListaCompraDatabaseAdapter(this);
+        listado = findViewById(R.id.listado);
+        listadoCompra = findViewById(R.id.tvLista);
         btAgregar = findViewById(R.id.btAnadir);
         btLimpiar = findViewById(R.id.btLimpiar);
         btSalir = findViewById(R.id.btSalir);
-        listado = findViewById(R.id.listado);
+
 
         rellenarLista();
 
@@ -52,14 +63,32 @@ public class Main extends AppCompatActivity {
 
         btAgregar.setOnClickListener(view -> {
             Intent intent = new Intent(this,AgregarProducto.class);
-            ///lanzadorActivity.launch();
+            lanzadorActivity.launch(intent);
         });
 
     }
 
+    ActivityResultContract<Intent, ActivityResult> contrato = new ActivityResultContracts.StartActivityForResult();
+    ActivityResultCallback<ActivityResult> respuesta = new ActivityResultCallback<ActivityResult>(){
+        @Override
+        public void onActivityResult(ActivityResult o) {
+            if (o.getResultCode() == Activity.RESULT_OK) {
+                //No hay códigos de actividad
+                Intent intentDevuelto = o.getData();
+                String nombreDevuelto = (String) intentDevuelto.getExtras().get("nombreProducto");
+                String cantidadDevuelto = (String) intentDevuelto.getExtras().get("cantidadProducto");
+
+            }
+        }
+    };
+
+    ActivityResultLauncher<Intent> lanzadorActivity = registerForActivityResult(contrato,respuesta);
+
 
 
     private void rellenarLista() {
+
+
         @SuppressWarnings("deprecation")
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.producto_row,

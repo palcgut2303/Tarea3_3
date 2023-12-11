@@ -1,5 +1,6 @@
 package com.example.tarea3_3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,10 +22,11 @@ public class AgregarProducto extends AppCompatActivity {
         aceptar = findViewById(R.id.btAceptar);
 
         aceptar.setOnClickListener(view -> {
-
-
-
-
+            Intent intentVolver = new Intent();
+            intentVolver.putExtra("nombreProducto",tv_nombre.getText().toString());
+            intentVolver.putExtra("cantidadProducto",tv_cantidad.getText().toString());
+            setResult(RESULT_OK, intentVolver);
+            finish();
         });
 
 
