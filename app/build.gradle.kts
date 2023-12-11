@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.example.tarea3_3"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 

@@ -18,22 +18,6 @@ import android.util.Log;
 
 import java.sql.SQLException;
 
-class DatabaseHelper extends SQLiteOpenHelper {
-    public DatabaseHelper(Context context) {
-        super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
-    }
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREAR_DATABASE);
-    }
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w("Actualizando BD", TAG);
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLA);
-        onCreate(db);
-    }
-}
-
 
 public class ListaCompraDatabaseAdapter {
 
@@ -116,4 +100,23 @@ public class ListaCompraDatabaseAdapter {
         args.put(CLAVE_CANTIDAD, cantidad);
         return this.dbCompra.update(DATABASE_TABLA, args, CLAVE_ID + "=" + rowId, null) > 0;
     }
+
+    class DatabaseHelper extends SQLiteOpenHelper {
+        public DatabaseHelper(Context context) {
+            super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL(CREAR_DATABASE);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            Log.w("Actualizando BD", TAG);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLA);
+            onCreate(db);
+        }
+    }
+
 }

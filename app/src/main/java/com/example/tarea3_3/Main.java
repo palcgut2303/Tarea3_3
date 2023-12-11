@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 
+import java.sql.SQLException;
+
 public class Main extends AppCompatActivity {
 
     TextView listadoCompra;
@@ -40,6 +42,11 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbAdapter = new ListaCompraDatabaseAdapter(this);
+        try {
+            dbAdapter.open();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         listado = findViewById(R.id.listado);
         listadoCompra = findViewById(R.id.tvLista);
         btAgregar = findViewById(R.id.btAnadir);
@@ -77,6 +84,10 @@ public class Main extends AppCompatActivity {
                 Intent intentDevuelto = o.getData();
                 String nombreDevuelto = (String) intentDevuelto.getExtras().get("nombreProducto");
                 String cantidadDevuelto = (String) intentDevuelto.getExtras().get("cantidadProducto");
+
+                dbAdapter.crearElemento(nombreDevuelto,Integer.parseInt(cantidadDevuelto));
+                dbAdapter.obtenerTodosElementos();
+
 
             }
         }

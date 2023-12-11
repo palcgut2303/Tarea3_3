@@ -16,6 +16,7 @@ public class AgregarProducto extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.agregar_producto);
 
         tv_nombre = findViewById(R.id.tv_nombreProducto);
         tv_cantidad = findViewById(R.id.tv_Cantidad);
